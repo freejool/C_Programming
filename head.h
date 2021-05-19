@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <conio.h>
 #include <windows.h>
 
 #define STU_NUM 50
@@ -27,10 +28,6 @@ typedef struct student {
     float aver; // 各门课程平均分
 } STU;
 
-typedef struct _COORD {
-    SHORT x;
-    SHORT y;
-} COORD, *PCOORD;
 
 int Menu(); // 操作菜单
 void SetPosition(int x, int y);
@@ -60,7 +57,7 @@ void SetPosition(int x, int y) {
     hOut - GetStdHandle(STD_OUTPUT_HANDLE);
     pos.X = x;
     pos.Y = y;
-    SetConsoleCursorPodition(hOut, pos);
+    SetConsoleCursorPosition(hOut, pos);
 }
 
 int Menu() {
@@ -184,7 +181,6 @@ void DeleteRecord(STU stu[], int *n, int m) {
         }
     }
     printf("未找到该生记录!\n");
-    return;
 }
 
 void CalculateScoreOfStudent(STU stu[], int n, int m) {
@@ -244,14 +240,14 @@ int ReadFromFile(STU stu[], int *n, int *m, int *first) {
         printf("磁盘文件student.txt无法打开");
         return 1;
     }
-    fscanf(fp, "%10d10d", n, m);
+    fscanf(fp, "%10d%10d", n, m);
     for (i = 0; i < *n; i++) {
         fscanf(fp, "%10ld", &stu[i].num);
         fscanf(fp, "%10s", stu[i].name);
         for (j = 0; j < *m; j++) {
             fscanf(fp, "%10f", &stu[i].score[j]);
         }
-        fscanf(fp, "%10f%10f", &stu[i], sum, &stu[i].aver);
+        fscanf(fp, "%10f%10f", &stu[i].sum, &stu[i].aver);
         *first = 0;
         fclose(fp);
         printf("数据从磁盘读取完毕!");
@@ -272,12 +268,11 @@ void AppendRecord(STU stu[], int *n, int m) {
         printf("输入第%d个学生信息:\t", i + 1);
         scanf("%ld%s", &stu[i].num, stu[i].name);
         for (j = 0; j < m; j++) {
-            scanf("%f" & stu[i].score[j]);
+            scanf("%f" ,&stu[i].score[j]);
         }
     }
     *n=*n+num_record;
     printf("添加完毕!\n");
-    return;
 }
 
 void SearchByNum(STU stu[], int n, int m){
@@ -297,7 +292,6 @@ void SearchByNum(STU stu[], int n, int m){
         }
     }
     printf("未找到这个学号对应的学生记录\n");
-    return;
 }
 
 void SearchByName(STU stu[], int n, int m){
@@ -321,7 +315,6 @@ void SearchByName(STU stu[], int n, int m){
     if(flag){
         printf("未找到这个姓名对应的学生记录\n");
     }
-    return;
 }
 
 void PrintRecord(STU stu[], int n, int m){
@@ -338,7 +331,6 @@ void PrintRecord(STU stu[], int n, int m){
         }
         printf("%-16.1lf%-16.1lf\n",stu[i].sum,stu[i].aver);
     }
-    return;
 }
 
 
@@ -366,7 +358,7 @@ void ModifyRecord(STU stu[], int n, int m) {
                 scanf("%ld%s", &stu[i].num, stu[i].name);
                 stu[i].sum = 0;
                 for (j = 0; j < m; j++) {
-                    scanf("5f", &stu[i].score[j]);
+                    scanf("%5f", &stu[i].score[j]);
                     stu[i].sum += stu[i].score[j];
                 }
                 stu[i].aver = stu[i].sum / m;
@@ -382,7 +374,6 @@ void ModifyRecord(STU stu[], int n, int m) {
         }
     }
     printf("未找到该生记录!\n");
-    return;
 }
 
 void SortByName(STU stu[], int n, int m) {
@@ -398,7 +389,6 @@ void SortByName(STU stu[], int n, int m) {
         }
     }
     printf("按姓名字典对学生记录排序完毕");
-    return;
 }
 
 void SortByNum(STU *stu, int n, int m) {
@@ -419,7 +409,6 @@ void SortByNum(STU *stu, int n, int m) {
         }
     }
     printf("按学号从小到大对学生记录排序完毕");
-    return;
 }
 
 void SortByScore(STU *stu, int n, int m, int (*compare)(float a, float b)) {
