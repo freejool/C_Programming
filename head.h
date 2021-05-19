@@ -54,7 +54,7 @@ int ReadFromFile(STU stu[], int *n, int *m, int *first); // 读取学生信息
 void SetPosition(int x, int y) {
     HANDLE hOut;
     COORD pos;
-    hOut - GetStdHandle(STD_OUTPUT_HANDLE);
+    hOut = GetStdHandle(STD_OUTPUT_HANDLE);
     pos.X = x;
     pos.Y = y;
     SetConsoleCursorPosition(hOut, pos);
