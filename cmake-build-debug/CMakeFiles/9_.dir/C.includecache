@@ -1,0 +1,42 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/Sxing/OneDrive/2020_2/C/9#/head.h
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+conio.h
+-
+windows.h
+-
+
+C:/Users/Sxing/OneDrive/2020_2/C/9#/main.c
+head.h
+C:/Users/Sxing/OneDrive/2020_2/C/9#/head.h
+part_1.h
+C:/Users/Sxing/OneDrive/2020_2/C/9#/part_1.h
+part_2.h
+C:/Users/Sxing/OneDrive/2020_2/C/9#/part_2.h
+part_3.h
+C:/Users/Sxing/OneDrive/2020_2/C/9#/part_3.h
+
+C:/Users/Sxing/OneDrive/2020_2/C/9#/part_1.h
+head.h
+C:/Users/Sxing/OneDrive/2020_2/C/9#/head.h
+
+C:/Users/Sxing/OneDrive/2020_2/C/9#/part_2.h
+head.h
+C:/Users/Sxing/OneDrive/2020_2/C/9#/head.h
+
+C:/Users/Sxing/OneDrive/2020_2/C/9#/part_3.h
+head.h
+C:/Users/Sxing/OneDrive/2020_2/C/9#/head.h
+

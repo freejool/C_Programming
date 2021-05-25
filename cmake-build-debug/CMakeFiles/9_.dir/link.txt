@@ -1,1 +1,3 @@
-/Library/Developer/CommandLineTools/usr/bin/cc -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX11.3.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/9_.dir/main.c.o -o 9_ 
+"E:\Program Files\JetBrains\CLion 2020.2.4\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\9_.dir/objects.a
+C:\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\ar.exe cr CMakeFiles\9_.dir/objects.a @CMakeFiles\9_.dir\objects1.rsp
+C:\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\gcc.exe -g -Wl,--whole-archive CMakeFiles\9_.dir/objects.a -Wl,--no-whole-archive -o 9_.exe -Wl,--out-implib,lib9_.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\9_.dir\linklibs.rsp
