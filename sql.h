@@ -1,5 +1,6 @@
 //
 // Created by 沈星宇 on 2021/5/23.
+// 已弃用
 //
 
 #ifndef INC_10__SQL_H
