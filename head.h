@@ -9,30 +9,29 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
-#include "sql.h"
+#include <conio.h>
+#include <stdlib.h>
 
-typedef enum {
-    Green,
-    Yellow,
-    Red
-} healthCode;
 
 typedef struct {
     char name[20];
-    bool sex;
-    char tel[20];
-    char ID[30];
-    char company[20];
-    char carNum[20];
-    char reason[100];
-    char guarantor[20];
-    char guarantorTel[20];
-    healthCode healthCode;
-    bool beenInInfectedAreaIn14Days;
-    bool haveSymptoms;
-    time_t AppliedEntryTime;
-    time_t AppliedDepartureTime;
-} Info;
+    int sex; // 0:female, 1:male
+    char ID[30]; // 身份证号
+    time_t timestamp;
+    char teleNum[50]; // 联系电话
+    char company[50]; // 单位信息
+    char carNum[50]; // 车牌号
+    char reason[50]; // 进校事由
+    char guarantor[50];	// 担保人
+    char guarantorTelNum[50]; // 担保人电话
+    int healthNum; // 健康码
+    int ifComeToDangerousPlace; // 14天内是否去过疫区
+    int ifFever; // 是否有咳嗽发热等症状
+    time_t applyInTime; // 申请进入时间
+    time_t applyOutTime; // 申请离开时间
+    time_t factInTime; // 实际进入时间
+    time_t factOutTime; // 实际离开时间
+} INFO;
 // 姓名、性别、联系电话、身份证号、单位信息、车牌号、进校事由、担保人、担保人电话、健康码、
 // 14天内是否去过疫区、是否有咳嗽发热等症状、申请进入 时间、申请离开时间、实际进入时间、实际离开时间等信息
 
@@ -41,73 +40,78 @@ typedef enum {
     Admin
 } Privilege;
 
-Privilege privilege = User;
-char scanStr[50];
+Privilege privilege = Admin;
+char timeBuf[50];
+INFO info;
 
 
-void init() {
-    connectMysql();
-   // init_keyboard();
-
-    //  TODO DRAW UI
-} // 初始化：建立连接
-
-void alert(char str[]) {
-    printf("%s\n", str); // TODO
-} // 提示信息
-
-void scan() {
-    scanf("%s", scanStr); // TODO
-} // 用户输入
-
-void newInfo() {
-    Info info;
-    char sql[100];
-    alert("Input your name: ");
-    scan();
-    strcpy(info.name, scanStr);
-    alert("Input your telephone number: ");
-    scan();
-    strcpy(info.tel, scanStr);
-    alert("Input your ID number: ");
-    scan();
-    strcpy(info.ID, scanStr);
-    sprintf(sql,"INSERT INTO info (name,tel,ID) VALUES('%s','%s','%s');",info.name,info.tel,info.ID);
-    updateData(sql);
-    alert("Done!");
-} // 访客登记
-
-void login() {
-    FILE *f;
-    char passwd[20];
-    if ((f = fopen("passwd", "r")) == NULL) {
-        alert("Fail to read 'passwd'!");
-        return;
-    }
-    alert("Input password: ");
-    fscanf(f, "%s", passwd);
-    scan();
-    if (strcmp(passwd, scanStr) == 0) {
-        alert("Switched to Admin!");
-        privilege = Admin;
-    } else {
-        alert("Wrong password!");
-    }
-    fclose(f);
-} // 用户,管理员
+void printRecord();
 
 
+//void newInfo() {
+//    char sql[100];
+//    time_t time_t;
+//    time_t = time(NULL);
+//    struct tm *arrTm;
+//    alert("Input your name: ");
+//    scan();
+//    strcpy(info.name, scanStr);
+//    alert("Input your telephone number: ");
+//    scan();
+//    strcpy(info.teleNum, scanStr);
+//    alert("Input your ID number: ");
+//    scan();
+//    strcpy(info.ID, scanStr);
+//    alert("Input your Arrival time(eg.2021-5-22 16:50): ");
+//    arrTm = localtime(&time_t);
+//    scanf("%d-%d-%d %d:%d", &arrTm->tm_year, &arrTm->tm_mon, &arrTm->tm_mday,
+//          &arrTm->tm_hour, &arrTm->tm_min);
+//
+//    sprintf(sql, "INSERT INTO info (name,teleNum,ID) VALUES('%s','%s','%s');", info.name, info.teleNum,
+//            info.ID);
+//   // updateData(sql);
+//    alert("Done!");
+//} // 访客登记
 
-void freeResource() {
-    freeConnect();
+
+//时间戳转日期 yyyy-MM-dd HH:mm:ss
+void timeToDate(time_t mytime){
+    struct tm* timeinfo;
+
+    timeinfo = localtime(&mytime); //转换
+    strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", timeinfo);
+   // printf("%s\n", timeBuf); //日期存入buffer中
 }
 
-void printTable(){
-    if(privilege==User){
-        alert("You have to be an Admin to print table!");
-        return;
+//日期转时间戳
+time_t dateToTime(char *str_time){
+    struct tm stm;
+    int iY, iM, iD, iH, iMin, iS;
+
+    memset(&stm,0,sizeof(stm));
+
+    iY = atoi(str_time); //分裂读入的日期
+    iM = atoi(str_time+5);
+    iD = atoi(str_time+8);
+    iH = atoi(str_time+11);
+    iMin = atoi(str_time+14);
+    iS = atoi(str_time+17);
+
+    stm.tm_year=iY-1900;
+    stm.tm_mon=iM-1;
+    stm.tm_mday=iD;
+    stm.tm_hour=iH;
+    stm.tm_min=iMin;
+    stm.tm_sec=iS;
+
+    /*printf("%d-%0d-%0d %0d:%0d:%0d\n", iY, iM, iD, iH, iMin, iS);*/
+    return mktime(&stm);
+}
+
+void printRecord() {
+    if (privilege == User) {
+        printf("您还不是管理员!请先登录!");
     }
-    outMysql();
 }
 
 #endif //INC_10__HEAD_H

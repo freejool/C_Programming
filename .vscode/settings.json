@@ -1,1 +1,6 @@
-{}
+{
+    "matlab.mlintpath": "D:\\Program Files\\Matlab\\bin\\win64\\mlint.exe",
+    "cSpell.words": [
+        "pmatrix"
+    ]
+}

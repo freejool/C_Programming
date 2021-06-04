@@ -4,14 +4,12 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/Users/sxing/OneDrive/2020_2/C/10#/main.c" "/Users/sxing/OneDrive/2020_2/C/10#/cmake-build-debug/CMakeFiles/10_.dir/main.c.o"
+  "C:/Users/Sxing/OneDrive/2020_2/C/10#/main.c" "C:/Users/Sxing/OneDrive/2020_2/C/10#/cmake-build-debug/CMakeFiles/10_.dir/main.c.obj"
   )
-set(CMAKE_C_COMPILER_ID "AppleClang")
+set(CMAKE_C_COMPILER_ID "GNU")
 
 # The include file search paths:
 set(CMAKE_C_TARGET_INCLUDE_PATH
-  "/opt/homebrew/Cellar/mysql/8.0.25_1/include"
-  "/opt/homebrew/Cellar/mysql/8.0.25_1/lib"
   )
 
 # Targets to which this target links.
