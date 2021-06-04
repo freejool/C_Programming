@@ -410,7 +410,7 @@ void lookUp() {
             SetPosition(0, y += 34);
             printf("%s", str);
         }
-            SetPosition(POS_X2, y+=2);
+        SetPosition(POS_X2, y += 2);
     }
 
     system("pause");
