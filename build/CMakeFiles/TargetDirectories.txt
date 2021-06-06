@@ -1,0 +1,4 @@
+C:/Users/Sxing/OneDrive/2020_2/C/10#/build/CMakeFiles/10_.dir
+C:/Users/Sxing/OneDrive/2020_2/C/10#/build/CMakeFiles/rebuild_cache.dir
+C:/Users/Sxing/OneDrive/2020_2/C/10#/build/CMakeFiles/test.dir
+C:/Users/Sxing/OneDrive/2020_2/C/10#/build/CMakeFiles/edit_cache.dir

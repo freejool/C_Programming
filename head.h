@@ -23,7 +23,7 @@ typedef struct {
     char carNum[50]; // 车牌号
     char reason[50]; // 进校事由
     char guarantor[50];	// 担保人
-    char guarantorTelNum[50]; // 担保人电话
+    char guarantorNum[50]; // 担保人电话
     int healthNum; // 健康码
     int ifComeToDangerousPlace; // 14天内是否去过疫区
     int ifFever; // 是否有咳嗽发热等症状

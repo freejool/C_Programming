@@ -1,0 +1,12 @@
+[
+{
+  "directory": "C:/Users/Sxing/OneDrive/2020_2/C/10#/build",
+  "command": "C:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/gcc.exe   -g -std=gnu11 -o CMakeFiles/10_.dir/main.c.obj -c \"C:/Users/Sxing/OneDrive/2020_2/C/10#/main.c\"",
+  "file": "C:/Users/Sxing/OneDrive/2020_2/C/10#/main.c"
+},
+{
+  "directory": "C:/Users/Sxing/OneDrive/2020_2/C/10#/build",
+  "command": "C:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/gcc.exe   -g -std=gnu11 -o CMakeFiles/test.dir/test.c.obj -c \"C:/Users/Sxing/OneDrive/2020_2/C/10#/test.c\"",
+  "file": "C:/Users/Sxing/OneDrive/2020_2/C/10#/test.c"
+}
+]

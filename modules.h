@@ -123,7 +123,7 @@ void Register() {
 
     SetPosition(POS_X2, posy += 2);
     printf("担保人电话:\t");
-    scanf("%s", info.guarantorTelNum);
+    scanf("%s", info.guarantorNum);
 
     SetPosition(POS_X2, posy += 2);
     printf("健康码:\t\t"); // 0:绿 >1:其他
@@ -163,10 +163,12 @@ void Register() {
     SetPosition(POS_X2, posy += 2);
     if (isDenied()) {
         printf("申请失败! 健康码不是绿码或发烧或到过高风险区域");
-    } else if (info.applyInTime > info.applyOutTime) {
+
+    }
+    else if (info.applyInTime > info.applyOutTime) {
         printf("进入时间不能超过离开时间");
-    } else if (info.applyInTime <= info.timestamp) {
-        printf("请输入将来的时刻");
+//    } else if (info.applyInTime <= info.timestamp) {
+//        printf("请输入将来的时刻");
     } else {
         printf("申请成功!");
         SetPosition(POS_X2, posy += 2);
@@ -212,7 +214,7 @@ void Arrival() {
                      "&carNum=%s"
                      "&reason=%s"
                      "&guarantor=%s"
-                     "&guarantorTelNum=%s"
+                     "&guarantorNum=%s"
                      "&healthNum=%d"
                      "&ifComeToDangerousPlace=%d"
                      "&ifFever=%d"
@@ -227,7 +229,7 @@ void Arrival() {
                 info.carNum,
                 info.reason,
                 info.guarantor,
-                info.guarantorTelNum,
+                info.guarantorNum,
                 info.healthNum,
                 info.ifComeToDangerousPlace,
                 info.ifFever,
@@ -399,7 +401,7 @@ void lookUp() {
                     info.carNum,
                     info.reason,
                     info.guarantor,
-                    info.guarantorTelNum,
+                    info.guarantorNum,
                     info.healthNum,
                     info.ifComeToDangerousPlace,
                     info.ifFever,
@@ -407,7 +409,7 @@ void lookUp() {
                     info.applyOutTime,
                     info.factInTime,
                     info.factOutTime);
-            SetPosition(0, y += 34);
+            SetPosition(0, 0);
             printf("%s", str);
         }
         SetPosition(POS_X2, y += 2);

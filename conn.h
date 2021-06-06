@@ -113,7 +113,7 @@ int sendData() { // 返回负值是错误代码，0是成功
                  "&carNum=%s"
                  "&reason=%s"
                  "&guarantor=%s"
-                 "&guarantorTelNum=%s"
+                 "&guarantorNum=%s"
                  "&healthNum=%d"
                  "&ifComeToDangerousPlace=%d"
                  "&ifFever=%d"
@@ -129,7 +129,7 @@ int sendData() { // 返回负值是错误代码，0是成功
             info.carNum,
             info.reason,
             info.guarantor,
-            info.guarantorTelNum,
+            info.guarantorNum,
             info.healthNum,
             info.ifComeToDangerousPlace,
             info.ifFever,
@@ -206,7 +206,7 @@ int getData(char ID[]) {
     strcpy(info.guarantor, token);
 
     token = strtok(NULL, ",");
-    strcpy(info.guarantorTelNum, token);
+    strcpy(info.guarantorNum, token);
 
     token = strtok(NULL, ",");
     if (strcmp(token, "null") == 0) info.healthNum = -1;
