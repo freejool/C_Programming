@@ -6,11 +6,14 @@
 #define INC_10__CONN_H
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <winsock2.h>
 #include <string.h>
 #include "head.h"
 
 #pragma comment (lib, "ws2_32.lib")
+
+char tmp[1024];
 
 typedef struct {
     char IP[20];
@@ -119,6 +122,8 @@ int sendData() { // 返回负值是错误代码，0是成功
                  "&ifFever=%d"
                  "&applyInTime=%lld"
                  "&applyOutTime=%lld"
+                 "&factInTime=%lld"
+                 "&factOutTime=%lld"
                  " HTTP/1.1\r\nHost: %s:%d\r\n\r\n",
             info.timestamp,
             info.ID,
@@ -135,6 +140,8 @@ int sendData() { // 返回负值是错误代码，0是成功
             info.ifFever,
             info.applyInTime,
             info.applyOutTime,
+            info.factInTime,
+            info.factOutTime,
             host.IP,
             host.port);
     rt = request(str, recv); // http request
@@ -143,12 +150,11 @@ int sendData() { // 返回负值是错误代码，0是成功
 }
 
 int getData(char ID[]) {
-    char str[256];
-    char recv[1024];
-    char tmp[1024];
+    char str[2048];
+    char recv[2048];
+    char *token;
     int num;
     int rt;
-    char *token;
     int i = 0;
     int startPos[20] = {0}; // 每行行首在recv的索引
     int count_n = 0;
@@ -164,6 +170,7 @@ int getData(char ID[]) {
     rt = request(str, recv);
     if (rt < 0) return rt;
 
+
     while (count_n < 6) {
         if (recv[i] == '\n') {
             count_n++;
@@ -172,61 +179,72 @@ int getData(char ID[]) {
         i++;
     }
 
+
     strncpy(tmp, recv + startPos[4], startPos[5] - startPos[4]);
     num = strtol(tmp, &ptr, 10);
-    strcpy(tmp, recv + startPos[5]); // 从第一条记录的第一位开始赋值给tmp
+    if (num != 0) {
+        strcpy(tmp, recv + startPos[5]); // 从第一条记录的第一位开始赋值给tmp
 
-    token = strtok(tmp, ",");
-    strcpy(info.name, token);
+        token = strtok(tmp, ",");
+        strcpy(info.name, token);
 
-    token = strtok(NULL, ",");
-    if (strcmp(token, "null") == 0) info.sex = -1;
-    else info.sex = token[0] - '0';
+        token = strtok(NULL, ",");//strtok字符串分割
+        if (strcmp(token, "null") == 0) info.sex = -1;
+        else info.sex = token[0] - '0';
 
-    token = strtok(NULL, ",");
-    strcpy(info.ID, token);
+        token = strtok(NULL, ",");
+        strcpy(info.ID, token);
 
-    token = strtok(NULL, ",");
-    if (strcmp(token, "null") == 0) info.timestamp = -1;
-    else info.timestamp = strtol(token, &ptr, 10);
+        token = strtok(NULL, ",");
+        if (strcmp(token, "null") == 0) info.timestamp = -1;
+        else info.timestamp = strtol(token, &ptr, 10);
 
-    token = strtok(NULL, ",");
-    strcpy(info.teleNum, token);
+        token = strtok(NULL, ",");
+        strcpy(info.teleNum, token);
 
-    token = strtok(NULL, ",");
-    strcpy(info.company, token);
+        token = strtok(NULL, ",");
+        strcpy(info.company, token);
 
-    token = strtok(NULL, ",");
-    strcpy(info.carNum, token);
+        token = strtok(NULL, ",");
+        strcpy(info.carNum, token);
 
-    token = strtok(NULL, ",");
-    strcpy(info.reason, token);
+        token = strtok(NULL, ",");
+        strcpy(info.reason, token);
 
-    token = strtok(NULL, ",");
-    strcpy(info.guarantor, token);
+        token = strtok(NULL, ",");
+        strcpy(info.guarantor, token);
 
-    token = strtok(NULL, ",");
-    strcpy(info.guarantorNum, token);
+        token = strtok(NULL, ",");
+        strcpy(info.guarantorNum, token);
 
-    token = strtok(NULL, ",");
-    if (strcmp(token, "null") == 0) info.healthNum = -1;
-    else info.healthNum = token[0] - '0';
+        token = strtok(NULL, ",");
+        if (strcmp(token, "null") == 0) info.healthNum = -1;
+        else info.healthNum = token[0] - '0';
 
-    token = strtok(NULL, ",");
-    if (strcmp(token, "null") == 0) info.ifComeToDangerousPlace = -1;
-    else info.ifComeToDangerousPlace = token[0] - '0';
+        token = strtok(NULL, ",");
+        if (strcmp(token, "null") == 0) info.ifComeToDangerousPlace = -1;
+        else info.ifComeToDangerousPlace = token[0] - '0';
 
-    token = strtok(NULL, ",");
-    if (strcmp(token, "null") == 0) info.ifFever = -1;
-    else info.ifFever = token[0] - '0';
+        token = strtok(NULL, ",");
+        if (strcmp(token, "null") == 0) info.ifFever = -1;
+        else info.ifFever = token[0] - '0';
 
-    token = strtok(NULL, ",");
-    if (strcmp(token, "null") == 0) info.applyInTime = -1;
-    else info.applyInTime = strtol(token, &ptr, 10);
+        token = strtok(NULL, ",");
+        if (strcmp(token, "null") == 0) info.applyInTime = -1;
+        else info.applyInTime = strtol(token, &ptr, 10);
 
-    token = strtok(NULL, ",");
-    if (strcmp(token, "null") == 0) info.applyOutTime = -1;
-    else info.applyOutTime = strtol(token, &ptr, 10);
+        token = strtok(NULL, ",");
+        if (strcmp(token, "null") == 0) info.applyOutTime = -1;
+        else info.applyOutTime = strtol(token, &ptr, 10);
+
+        token = strtok(NULL, ",");
+        if (strcmp(token, "null") == 0) info.applyInTime = -1;
+        else info.factInTime = strtol(token, &ptr, 10);
+
+        token = strtok(NULL, ",");
+        if (strcmp(token, "null") == 0) info.applyInTime = -1;
+        else info.factOutTime = strtol(token, &ptr, 10);
+    }
 
     return num;
 // 此时info中存着最新的记录
@@ -239,3 +257,4 @@ int release() {
 }
 
 #endif //INC_10__CONN_H
+

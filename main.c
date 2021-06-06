@@ -11,6 +11,7 @@ int main() {
 
     while (1) {
         //alert("1: new record, 2: login, 3: print table, 0: exit");
+       // clearInfo();
         c = Menu();
 
         switch (c) {

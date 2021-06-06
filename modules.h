@@ -12,6 +12,7 @@
 #include <time.h>
 #include <windows.h>
 #include "head.h"
+#include "conn.h"
 
 #define INFO_NUM 10
 #define POS_X1 35
@@ -19,6 +20,7 @@
 #define POS_X3 50
 #define POS_X4 65
 #define POS_Y 3
+
 
 void SetPosition(int x, int y) {
     HANDLE hOut;
@@ -160,19 +162,22 @@ void Register() {
     timeStamp = dateToTime(inputTime);
     info.applyOutTime = timeStamp;
     memset(inputTime, 0, strlen(inputTime) * sizeof(char));
+
+    info.factInTime = 0;
+    info.factOutTime = 0;
+
     SetPosition(POS_X2, posy += 2);
     if (isDenied()) {
         printf("申请失败! 健康码不是绿码或发烧或到过高风险区域");
-
-    }
-    else if (info.applyInTime > info.applyOutTime) {
+    } else if (info.applyInTime > info.applyOutTime) {
         printf("进入时间不能超过离开时间");
 //    } else if (info.applyInTime <= info.timestamp) {
 //        printf("请输入将来的时刻");
     } else {
         printf("申请成功!");
         SetPosition(POS_X2, posy += 2);
-        if ((rt = sendData()) == 0) {
+        rt = sendData();
+        if (rt == 0) {
             printf("记录已保存!");
         } else {
             printf("记录保存失败,错误%d", rt);
@@ -195,6 +200,7 @@ void Arrival() {
     char id[50];
     time_t timeNow = time(NULL);
 
+
     SetPosition(POS_X2, posy += 2);
     printf("请输入您的身份证号:");
     scanf("%s", id);
@@ -214,7 +220,7 @@ void Arrival() {
                      "&carNum=%s"
                      "&reason=%s"
                      "&guarantor=%s"
-                     "&guarantorNum=%s"
+                     "&guarantorTelNum=%s"
                      "&healthNum=%d"
                      "&ifComeToDangerousPlace=%d"
                      "&ifFever=%d"
@@ -229,7 +235,7 @@ void Arrival() {
                 info.carNum,
                 info.reason,
                 info.guarantor,
-                info.guarantorNum,
+                info.guarantorTelNum,
                 info.healthNum,
                 info.ifComeToDangerousPlace,
                 info.ifFever,
@@ -251,17 +257,18 @@ void Arrival() {
         SetPosition(POS_X2, posy += 2);
         if (isDenied()) {
             printf("健康码不是绿码或发烧或到过高风险区域");
-        } else if (timeNow < info.applyInTime || info.applyOutTime) {
+        } else if (timeNow < info.applyInTime || timeNow > info.applyOutTime) {
             printf("现在不在申请的时间内");
         } else {
             printf("请进!");
+            info.timestamp = timeNow;
             info.factInTime = timeNow;
-            sendData();
+            rt = sendData();
             SetPosition(POS_X2, posy += 2);
-            if (sendData() == 1) {
+            if (rt == 0) {
                 printf("记录已保存");
             } else {
-                printf("服务器连接失败,记录保存失败");
+                printf("服务器连接失败,记录保存失败,错误%d", rt);
             }
         }
     }
@@ -275,6 +282,7 @@ void departure() {
     int rt;
     char id[50];
     time_t timeNow = time(NULL);
+
 
     SetPosition(POS_X2, posy += 2);
     printf("请输入您的身份证号:");
@@ -304,13 +312,14 @@ void departure() {
         }
         SetPosition(POS_X2, posy += 2);
         printf("欢迎下次再来!");
+        info.timestamp = timeNow;
         info.factOutTime = timeNow;
-        sendData();
+        rt = sendData();
         SetPosition(POS_X2, posy += 2);
-        if (sendData() == 1) {
+        if (rt == 0) {
             printf("记录已保存");
         } else {
-            printf("服务器连接失败,记录保存失败");
+            printf("服务器连接失败,记录保存失败,错误%d", rt);
         }
 
     }
@@ -355,62 +364,105 @@ void lookUp() {
     int rt;
     char str[1024];
     system("cls");
-    SetPosition(POS_X2, y += 2);
+    SetPosition(POS_X1, y += 2);
     if (privilege == User) {
         printf("请以管理员身份登录!");
-        SetPosition(POS_X2, y += 2);
+        SetPosition(POS_X1, y += 2);
     } else {
         printf("请输入身份证号:");
         scanf("%s", ID);
         rt = getData(ID);
-        SetPosition(POS_X2, y += 2);
+        SetPosition(POS_X1, y += 2);
         if (rt < 0) {
             printf("记录获取失败,错误%d", rt);
         } else if (rt == 0) {
             printf("未找到记录!");
         } else {
             printf("共有%d条记录", rt);
-            SetPosition(POS_X2, y += 2);
+            SetPosition(POS_X1, y += 2);//隔开
             printf("最新的一条记录是:");
+//          姓名、性别、联系电话、身份证号、单位信息、车牌号、进校事由、担保人、担保人电话、健康码、
+// 			14天内是否去过疫区、是否有咳嗽发热等症状、申请进入 时间、申请离开时间、实际进入时间、实际离开时间等信息
+//            sprintf(str, "更新时间: %lld\n"
+//                         "身份证号:\t%s\n"
+//                         "姓名:\t\t%s\n"
+//                         "性别:\t\t%d\n"
+//                         "联系电话:\t%s\n"
+//                         "单位:\t\t%s\n"
+//                         "车牌号:\t\t%s\n"
+//                         "进校事由:\t%s\n"
+//                         "担保人:\t\t%s\n"
+//                         "担保人电话:\t%s\n"
+//                         "健康码:\t%d\n"
+//                         "去过疫区:\t%d\n"
+//                         "咳嗽发热:\t%d\n"
+//                         "申请进入时间:\t%lld\n"
+//                         "申请离开时间:\t%lld\n"
+//                         "实际进入时间:\t%lld\n"
+//                         "实际离开时间:\t%lld\n",
+//                    info.timestamp,
+//                    info.ID,
+//                    info.name,
+//                    info.sex,
+//                    info.teleNum,
+//                    info.company,
+//                    info.carNum,
+//                    info.reason,
+//                    info.guarantor,
+//                    info.guarantorTelNum,
+//                    info.healthNum,
+//                    info.ifComeToDangerousPlace,
+//                    info.ifFever,
+//                    info.applyInTime,
+//                    info.applyOutTime,
+//                    info.factInTime,
+//                    info.factOutTime);
+//            SetPosition(POS_X2, y += 2);
+//            printf("%s", str);
+            SetPosition(POS_X1, y += 2);
+            timeToDate(info.timestamp);
+            printf("更新时间:\t%s", timeBuf);
+            SetPosition(POS_X1, y += 2);
+            printf("身份证号:\t%s", info.ID);
+            SetPosition(POS_X1, y += 2);
+            printf("姓名:\t%s", info.name);
+            SetPosition(POS_X1, y += 2);
+            printf("性别:\t%d", info.sex);
+            SetPosition(POS_X1, y += 2);
+            printf("联系电话:\t%s", info.teleNum);
+            SetPosition(POS_X1, y += 2);
+            printf("单位:\t%s", info.company);
+            SetPosition(POS_X1, y += 2);
+            printf("车牌号:\t%s", info.carNum);
+            SetPosition(POS_X1, y += 2);
+            printf("进校事由:\t%s", info.reason);
+            SetPosition(POS_X1, y += 2);
+            printf("担保人:\t%s", info.guarantor);
+            SetPosition(POS_X1, y += 2);
+            printf("担保人电话:\t%s", info.guarantorNum);
+            SetPosition(POS_X1, y += 2);
+            printf("健康码:\t%d", info.healthNum);
+            SetPosition(POS_X1, y += 2);
+            printf("去过疫区:\t%d", info.ifComeToDangerousPlace);
+            SetPosition(POS_X1, y += 2);
+            printf("咳嗽发热:\t%d", info.ifFever);
 
-            // 姓名、性别、联系电话、身份证号、单位信息、车牌号、进校事由、担保人、担保人电话、健康码、
-// 14天内是否去过疫区、是否有咳嗽发热等症状、申请进入 时间、申请离开时间、实际进入时间、实际离开时间等信息
-            sprintf(str, "更新时间: %lld\n"
-                         "身份证号:\t\t%s\n"
-                         "姓名:\t\t%s\n"
-                         "性别:\t\t%d\n"
-                         "联系电话:\t%s\n"
-                         "单位:\t\t%s\n"
-                         "车牌号:\t%s\n"
-                         "进校事由:\t%s\n"
-                         "担保人:\t\t%s\n"
-                         "担保人电话:\t%s\n"
-                         "健康码:\t%d\n"
-                         "去过疫区:\t%d\n"
-                         "咳嗽发热:\t%d\n"
-                         "申请进入时间:\t%lld\n"
-                         "申请离开时间:\t%lld\n"
-                         "实际进入时间:\t%lld\n"
-                         "实际离开时间:\t%lld\n",
-                    info.timestamp,
-                    info.ID,
-                    info.name,
-                    info.sex,
-                    info.teleNum,
-                    info.company,
-                    info.carNum,
-                    info.reason,
-                    info.guarantor,
-                    info.guarantorNum,
-                    info.healthNum,
-                    info.ifComeToDangerousPlace,
-                    info.ifFever,
-                    info.applyInTime,
-                    info.applyOutTime,
-                    info.factInTime,
-                    info.factOutTime);
-            SetPosition(0, 0);
-            printf("%s", str);
+            SetPosition(POS_X1, y += 2);
+            timeToDate(info.applyInTime);
+            printf("申请进入时间:\t%s", timeBuf);
+
+            SetPosition(POS_X1, y += 2);
+            timeToDate(info.applyOutTime);
+            printf("申请离开时间:\t%s", timeBuf);
+
+            SetPosition(POS_X1, y += 2);
+            timeToDate(info.factInTime);
+            printf("实际进入时间:\t%s", timeBuf);
+
+            SetPosition(POS_X1, y += 2);
+            timeToDate(info.factOutTime);
+            printf("实际离开时间:\t%s", timeBuf);
+
         }
         SetPosition(POS_X2, y += 2);
     }
@@ -419,3 +471,4 @@ void lookUp() {
 }
 
 #endif //INC_10__MODULES_H
+

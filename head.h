@@ -40,12 +40,30 @@ typedef enum {
     Admin
 } Privilege;
 
-Privilege privilege = Admin;
+Privilege privilege = User;
 char timeBuf[50];
 INFO info;
 
 
-void printRecord();
+//void clearInfo(){
+//    info.    name[20]=;
+//    info.    sex; // 0:female, 1:male
+//    info.    ID[30]; // 身份证号
+//    info.   timestamp;
+//    info.       teleNum[50]; // 联系电话
+//    info.       company[50]; // 单位信息
+//    info.       carNum[50]; // 车牌号
+//    info.       reason[50]; // 进校事由
+//    info.       guarantor[50];	// 担保人
+//    info.       guarantorNum[50]; // 担保人电话
+//    info.       healthNum; // 健康码
+//    info.       ifComeToDangerousPlace; // 14天内是否去过疫区
+//    info.       ifFever; // 是否有咳嗽发热等症状
+//    info.applyInTime; // 申请进入时间
+//    info.applyOutTime; // 申请离开时间
+//    info.factInTime; // 实际进入时间
+//    info.factOutTime; // 实际离开时间
+//}
 
 
 //void newInfo() {
