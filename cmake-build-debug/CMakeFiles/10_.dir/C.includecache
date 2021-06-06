@@ -9,6 +9,8 @@
 C:/Users/Sxing/OneDrive/2020_2/C/10#/conn.h
 stdio.h
 -
+stdlib.h
+-
 winsock2.h
 -
 string.h
@@ -55,4 +57,6 @@ windows.h
 -
 head.h
 C:/Users/Sxing/OneDrive/2020_2/C/10#/head.h
+conn.h
+C:/Users/Sxing/OneDrive/2020_2/C/10#/conn.h
 

@@ -22,7 +22,7 @@ typedef struct {
     char company[50]; // 单位信息
     char carNum[50]; // 车牌号
     char reason[50]; // 进校事由
-    char guarantor[50];	// 担保人
+    char guarantor[50];    // 担保人
     char guarantorNum[50]; // 担保人电话
     int healthNum; // 健康码
     int ifComeToDangerousPlace; // 14天内是否去过疫区
@@ -93,34 +93,34 @@ INFO info;
 
 
 //时间戳转日期 yyyy-MM-dd HH:mm:ss
-void timeToDate(time_t mytime){
-    struct tm* timeinfo;
+void timeToDate(time_t mytime) {
+    struct tm *timeinfo;
 
     timeinfo = localtime(&mytime); //转换
     strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", timeinfo);
-   // printf("%s\n", timeBuf); //日期存入buffer中
+    // printf("%s\n", timeBuf); //日期存入buffer中
 }
 
 //日期转时间戳
-time_t dateToTime(char *str_time){
+time_t dateToTime(char *str_time) {
     struct tm stm;
     int iY, iM, iD, iH, iMin, iS;
 
-    memset(&stm,0,sizeof(stm));
+    memset(&stm, 0, sizeof(stm));
 
     iY = atoi(str_time); //分裂读入的日期
-    iM = atoi(str_time+5);
-    iD = atoi(str_time+8);
-    iH = atoi(str_time+11);
-    iMin = atoi(str_time+14);
-    iS = atoi(str_time+17);
+    iM = atoi(str_time + 5);
+    iD = atoi(str_time + 8);
+    iH = atoi(str_time + 11);
+    iMin = atoi(str_time + 14);
+    iS = atoi(str_time + 17);
 
-    stm.tm_year=iY-1900;
-    stm.tm_mon=iM-1;
-    stm.tm_mday=iD;
-    stm.tm_hour=iH;
-    stm.tm_min=iMin;
-    stm.tm_sec=iS;
+    stm.tm_year = iY - 1900;
+    stm.tm_mon = iM - 1;
+    stm.tm_mday = iD;
+    stm.tm_hour = iH;
+    stm.tm_min = iMin;
+    stm.tm_sec = iS;
 
     /*printf("%d-%0d-%0d %0d:%0d:%0d\n", iY, iM, iD, iH, iMin, iS);*/
     return mktime(&stm);
