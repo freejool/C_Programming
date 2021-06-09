@@ -2,7 +2,9 @@ file(REMOVE_RECURSE
   "10_.exe"
   "10_.exe.manifest"
   "10_.pdb"
+  "CMakeFiles/10_.dir/conn.c.obj"
   "CMakeFiles/10_.dir/main.c.obj"
+  "CMakeFiles/10_.dir/modules.c.obj"
   "lib10_.dll.a"
 )
 

@@ -6,9 +6,9 @@ set(CMAKE_C_STANDARD 11)
 
 
 
-add_executable(10_ main.c head.h conn.h modules.h)
+add_executable(10_ main.c head.h conn.c modules.c)
 target_link_libraries(10_ ws2_32)
 
-add_executable(test test.c head.h conn.h modules.h)
+add_executable(test test.c head.h conn.c modules.c)
 target_link_libraries(test ws2_32)
 

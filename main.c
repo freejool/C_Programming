@@ -1,13 +1,10 @@
-#include <stdio.h>
+
 #include "head.h"
-#include "conn.h"
-#include "modules.h"
+
 
 int main() {
-    setbuf(stdout, NULL);
+//    setbuf(stdout, NULL);
     int c;
-    char str[20];
-
 
     while (1) {
         //alert("1: new record, 2: login, 3: print table, 0: exit");

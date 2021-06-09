@@ -154,6 +154,36 @@ test/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\test.dir\build.make CMakeFiles/test.dir/build
 .PHONY : test/fast
 
+conn.obj: conn.c.obj
+
+.PHONY : conn.obj
+
+# target to build an object file
+conn.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\10_.dir\build.make CMakeFiles/10_.dir/conn.c.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test.dir\build.make CMakeFiles/test.dir/conn.c.obj
+.PHONY : conn.c.obj
+
+conn.i: conn.c.i
+
+.PHONY : conn.i
+
+# target to preprocess a source file
+conn.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\10_.dir\build.make CMakeFiles/10_.dir/conn.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test.dir\build.make CMakeFiles/test.dir/conn.c.i
+.PHONY : conn.c.i
+
+conn.s: conn.c.s
+
+.PHONY : conn.s
+
+# target to generate assembly for a file
+conn.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\10_.dir\build.make CMakeFiles/10_.dir/conn.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test.dir\build.make CMakeFiles/test.dir/conn.c.s
+.PHONY : conn.c.s
+
 main.obj: main.c.obj
 
 .PHONY : main.obj
@@ -180,6 +210,36 @@ main.s: main.c.s
 main.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\10_.dir\build.make CMakeFiles/10_.dir/main.c.s
 .PHONY : main.c.s
+
+modules.obj: modules.c.obj
+
+.PHONY : modules.obj
+
+# target to build an object file
+modules.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\10_.dir\build.make CMakeFiles/10_.dir/modules.c.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test.dir\build.make CMakeFiles/test.dir/modules.c.obj
+.PHONY : modules.c.obj
+
+modules.i: modules.c.i
+
+.PHONY : modules.i
+
+# target to preprocess a source file
+modules.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\10_.dir\build.make CMakeFiles/10_.dir/modules.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test.dir\build.make CMakeFiles/test.dir/modules.c.i
+.PHONY : modules.c.i
+
+modules.s: modules.c.s
+
+.PHONY : modules.s
+
+# target to generate assembly for a file
+modules.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\10_.dir\build.make CMakeFiles/10_.dir/modules.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test.dir\build.make CMakeFiles/test.dir/modules.c.s
+.PHONY : modules.c.s
 
 test.obj: test.c.obj
 
@@ -218,9 +278,15 @@ help:
 	@echo ... rebuild_cache
 	@echo ... 10_
 	@echo ... test
+	@echo ... conn.obj
+	@echo ... conn.i
+	@echo ... conn.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
+	@echo ... modules.obj
+	@echo ... modules.i
+	@echo ... modules.s
 	@echo ... test.obj
 	@echo ... test.i
 	@echo ... test.s

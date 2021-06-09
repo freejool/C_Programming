@@ -110,7 +110,7 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="C:/Users/Sxing/OneDrive/2020_2/C/10#/conn.h">
+		<Unit filename="C:/Users/Sxing/OneDrive/2020_2/C/10#/conn.c">
 			<Option target="10_"/>
 			<Option target="test"/>
 		</Unit>
@@ -121,7 +121,7 @@
 		<Unit filename="C:/Users/Sxing/OneDrive/2020_2/C/10#/main.c">
 			<Option target="10_"/>
 		</Unit>
-		<Unit filename="C:/Users/Sxing/OneDrive/2020_2/C/10#/modules.h">
+		<Unit filename="C:/Users/Sxing/OneDrive/2020_2/C/10#/modules.c">
 			<Option target="10_"/>
 			<Option target="test"/>
 		</Unit>

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "head.h"
-#include "conn.h"
-#include "modules.h"
+#include "conn.c"
+#include "modules.c"
 
 
 //num 4

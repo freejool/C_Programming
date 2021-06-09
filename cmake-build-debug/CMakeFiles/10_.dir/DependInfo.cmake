@@ -4,7 +4,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
+  "C:/Users/Sxing/OneDrive/2020_2/C/10#/conn.c" "C:/Users/Sxing/OneDrive/2020_2/C/10#/cmake-build-debug/CMakeFiles/10_.dir/conn.c.obj"
   "C:/Users/Sxing/OneDrive/2020_2/C/10#/main.c" "C:/Users/Sxing/OneDrive/2020_2/C/10#/cmake-build-debug/CMakeFiles/10_.dir/main.c.obj"
+  "C:/Users/Sxing/OneDrive/2020_2/C/10#/modules.c" "C:/Users/Sxing/OneDrive/2020_2/C/10#/cmake-build-debug/CMakeFiles/10_.dir/modules.c.obj"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 
